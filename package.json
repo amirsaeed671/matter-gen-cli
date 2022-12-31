@@ -1,0 +1,19 @@
+{
+  "name": "matter-gen-cli",
+  "version": "0.0.1",
+  "main": "./bin/index.js",
+  "description": "generate md file with meta data for gray-matter",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "bin": {
+    "matter-gen-cli": "./bin/index.js"
+  },
+  "repository": "https://github.com/amirsaeed671/matter-gen-cli.git",
+  "author": "amirsaeed671 <amir.saeed.ali92@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "typescript": "^4.9.4"
+  }
+}
