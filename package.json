@@ -1,6 +1,6 @@
 {
   "name": "@amirsaeed671/matter-gen-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./src/index.ts",
   "description": "generate md file with meta data for gray-matter",
   "scripts": {

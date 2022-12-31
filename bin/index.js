@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const child_process_1 = require("child_process");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const args = [
@@ -37,13 +36,22 @@ function validateArguments(cliArgs) {
     }
 }
 function generateTemplate({ title, id, date, }) {
-    const fileContent = fs_1.default
-        .readFileSync(path_1.default.join(__dirname, "../", "templates", "blog-post.md"), "utf8")
-        .replace(/\{\{title\}\}/g, title)
-        .replace(/\{\{date\}\}/g, date);
-    (0, child_process_1.exec)(`echo '${fileContent}' > ${process.cwd()}/${id}.md`);
-    console.log(`${id}.md is generated successfully on directory: ${process.cwd()}`);
-    process.exit(0);
+    const readStream = fs_1.default.createReadStream(path_1.default.join(__dirname, "../", "templates", "blog-post.md"));
+    let data = "";
+    readStream.on("data", (chunk) => {
+        data += chunk;
+    });
+    readStream.on("end", () => {
+        const fileContent = data
+            .replace(/\{\{title\}\}/g, title)
+            .replace(/\{\{date\}\}/g, date);
+        const writeStream = fs_1.default.createWriteStream(`${process.cwd()}/${id}.md`, "utf8");
+        writeStream.write(fileContent);
+        writeStream.on("finish", () => {
+            console.log(`${id}.md is generated successfully on directory: ${process.cwd()}`);
+            process.exit(0);
+        });
+    });
 }
 function printHelp() {
     // Print all the available arguments

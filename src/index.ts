@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import { exec } from "child_process";
 import fs from "fs";
 import path from "path";
 
@@ -52,20 +51,33 @@ function generateTemplate({
   date: string;
   id: string;
 }): void {
-  const fileContent = fs
-    .readFileSync(
-      path.join(__dirname, "../", "templates", "blog-post.md"),
-      "utf8"
-    )
-    .replace(/\{\{title\}\}/g, title)
-    .replace(/\{\{date\}\}/g, date);
-
-  exec(`echo '${fileContent}' > ${process.cwd()}/${id}.md`);
-
-  console.log(
-    `${id}.md is generated successfully on directory: ${process.cwd()}`
+  const readStream = fs.createReadStream(
+    path.join(__dirname, "../", "templates", "blog-post.md")
   );
-  process.exit(0);
+  let data = "";
+
+  readStream.on("data", (chunk) => {
+    data += chunk;
+  });
+
+  readStream.on("end", () => {
+    const fileContent = data
+      .replace(/\{\{title\}\}/g, title)
+      .replace(/\{\{date\}\}/g, date);
+    const writeStream = fs.createWriteStream(
+      `${process.cwd()}/${id}.md`,
+      "utf8"
+    );
+
+    writeStream.write(fileContent);
+
+    writeStream.on("finish", () => {
+      console.log(
+        `${id}.md is generated successfully on directory: ${process.cwd()}`
+      );
+      process.exit(0);
+    });
+  });
 }
 
 function printHelp() {
