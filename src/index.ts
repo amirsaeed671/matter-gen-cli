@@ -2,6 +2,7 @@
 
 import { exec } from "child_process";
 import fs from "fs";
+import path from "path";
 
 const args = [
   {
@@ -52,7 +53,10 @@ function generateTemplate({
   id: string;
 }): void {
   const fileContent = fs
-    .readFileSync("./src/template/template.md", "utf8")
+    .readFileSync(
+      path.join(__dirname, "../", "templates", "blog-post.md"),
+      "utf8"
+    )
     .replace(/\{\{title\}\}/g, title)
     .replace(/\{\{date\}\}/g, date);
 

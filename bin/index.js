@@ -6,6 +6,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const child_process_1 = require("child_process");
 const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 const args = [
     {
         name: "--meta",
@@ -37,7 +38,7 @@ function validateArguments(cliArgs) {
 }
 function generateTemplate({ title, id, date, }) {
     const fileContent = fs_1.default
-        .readFileSync("./src/template/template.md", "utf8")
+        .readFileSync(path_1.default.join(__dirname, "../", "templates", "blog-post.md"), "utf8")
         .replace(/\{\{title\}\}/g, title)
         .replace(/\{\{date\}\}/g, date);
     (0, child_process_1.exec)(`echo '${fileContent}' > ${process.cwd()}/${id}.md`);
