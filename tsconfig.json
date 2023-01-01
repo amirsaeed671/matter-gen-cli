@@ -2,12 +2,13 @@
   "compilerOptions": {
     "target": "es2015",
     "module": "commonjs",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "include": ["./src/*.ts"]
     },
     "allowJs": false,
     "outDir": "./bin",
+    "rootDir": "./src",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

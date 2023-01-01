@@ -1,7 +1,7 @@
 {
   "name": "@amirsaeed671/matter-gen-cli",
   "version": "0.0.2",
-  "main": "./src/index.ts",
+  "main": "/src/index.ts",
   "description": "generate md file with meta data for gray-matter",
   "scripts": {
     "build": "npx tsc",
@@ -11,8 +11,8 @@
     "access": "public"
   },
   "bin": {
-    "@amirsaeed671/matter-gen-cli": "./bin/index.js",
-    "matter-gen-cli": "./bin/index.js"
+    "@amirsaeed671/matter-gen-cli": "./bin/src/index.js",
+    "matter-gen-cli": "./bin/src/index.js"
   },
   "repository": "https://github.com/amirsaeed671/matter-gen-cli.git",
   "author": "amirsaeed671 <amir.saeed.ali92@gmail.com>",
@@ -26,6 +26,7 @@
     "matter-gen-cli"
   ],
   "files": [
+    "matter-gen-cli.config.ts",
     "bin/",
     "src/",
     "templates/"
